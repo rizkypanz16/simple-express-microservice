@@ -1,17 +1,52 @@
 const express = require('express');
 const cors = require('cors');
-const proxy = require('express-http-proxy');
+
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/customer', proxy('http://localhost:8001'));       // customer
-app.use('/shopping', proxy('http://localhost:8003'));       // shopping
-app.use('/', proxy('http://localhost:8002'));               // products
+// customer redirect proxy
+app.use('/api/customer', createProxyMiddleware({
+    target: 'http://localhost:8001',
+    changeOrigin: true
+}));
 
+// products redirect proxy
+app.use('/api/shopping', createProxyMiddleware({
+    target: 'http://localhost:8002',
+    changeOrigin: true
+}));   
 
+// shopping redirect proxy
+app.use('/api/shopping', createProxyMiddleware({
+    target: 'http://localhost:8003',
+    changeOrigin: true
+}));
+
+app.get('/api', (req, res) => {
+    res.json(
+        {
+          "status": true,
+          "code": 200,
+          "message": "SUCCESS",
+          "API": "API GATEWAY",
+          }
+      );
+});
+
+app.use('/', (req, res) => {
+    res.json(
+        {
+          "status": true,
+          "code": 200,
+          "message": "SUCCESS",
+          "API": "API GATEWAY",
+          }
+      );
+});
 
 app.listen(8000, () => {
     console.log('gateway service listening on port 8000');
