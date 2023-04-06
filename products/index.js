@@ -1,13 +1,33 @@
 const express = require('express');
+const env = require('dotenv').config();
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ extended: true }));
 
-app.use('/', (req, res, next) => {
-    return res.status(200).json({"msg": "products service running.."});
-})
+var products = require('././routes/products.js');
+
+app.use('/api/products', products);
+app.get('/api', (req, res) => {
+    res.json(
+    {
+        "status": true,
+        "code": 200,
+        "message": "SUCCESS",
+        "api": "== products service =="
+    });
+});
+app.get('/', (req, res) => {
+    res.json(
+    {
+        "status": true,
+        "code": 200,
+        "message": "SUCCESS",
+        "api": "== products service =="
+    });
+});
 
 app.listen(8002, () => {
-    console.log('products service listening on port 8002');
+    console.log("== products service ==");
+    console.log(`server listening at http://localhost:8002`);
 });
