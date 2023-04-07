@@ -6,8 +6,10 @@ const app = express();
 app.use(express.json({ extended: true }));
 
 var products = require('././routes/products.js');
+var productCategories = require('././routes/productCategories.js');
 
 app.use('/api/products', products);
+app.use('/api/product-categories', productCategories);
 app.get('/api', (req, res) => {
     res.json(
     {
