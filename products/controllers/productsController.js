@@ -4,18 +4,9 @@ var bodyParser = require('body-parser');
 
 exports.getProducts = (req, res) => {
   const categoryId = req.query.categoryId;
-  if(categoryId === undefined){
-    connection.query("SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id;", (error, results, fields) => { 
-      if (error) throw error;
-      res.status(200);
-      res.json(
-        { 
-            status: "OK",
-            data: results
-        }
-      )
-    });
-  }else{
+  const searchQuery = req.query.search;
+  // JIKA MELAKUKAN QUERY BERDASARKAN categoryId
+  if(categoryId !== undefined){
     connection.query("SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_category = "+categoryId+";", (error, results, fields) => { 
       if (error) throw error;
       res.status(200);
@@ -26,24 +17,32 @@ exports.getProducts = (req, res) => {
         }
       )
     });
-  }
-    
+  // JIKA MELAKUKAN QUERY BERDASARKAN search
+  } else if (searchQuery !== undefined) {
+    connection.query("SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(products.product_name) LIKE '%"+searchQuery+"%';", (error, results, fields) => { 
+      if (error) throw error;
+      res.status(200);
+      res.json(
+        { 
+            status: "OK",
+            data: results
+        }
+      )
+    });
+  // JIKA MENCARI SEMUA PRODUCT
+  }else{
+    connection.query("SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id;", (error, results, fields) => { 
+      if (error) throw error;
+      res.status(200);
+      res.json(
+        { 
+            status: "OK",
+            data: results
+        }
+      )
+    });
+  }  
 }
-
-// exports.getProductByCategoryId = (req, res) => {
-//   const categoryId = req.query.categoryId;
-//   console.log(categoryId);
-//   connection.query("SELECT * FROM products WHERE product_category = "+categoryId+";", (error, results, fields) => { 
-//       if (error) throw error;
-//       res.status(200);
-//       res.json(
-//         { 
-//             status: "OK",
-//             data: results
-//         }
-//       )
-//     });
-// }
 
 exports.getProductsId = (req, res) => {
     connection.query("SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_id = "+req.params.productId+"", (error, results, fields) => { 

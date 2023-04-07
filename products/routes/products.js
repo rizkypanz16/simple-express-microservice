@@ -6,8 +6,6 @@ const productsController = require('./../controllers/productsController.js');
 
 router.get('/', productsController.getProducts);
 
-// router.get('/', productsController.getProductByCategoryId);
-
 router.post('/', productsController.postProducts);
 
 router.get('/:productId', productsController.getProductsId);
