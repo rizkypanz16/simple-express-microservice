@@ -2,7 +2,7 @@ const env = require('dotenv').config();
 const mysql = require('mysql');
 
 dbdata = {
-  host: "103.147.222.243",
+  host: "192.168.7.61",
   user: "root",
   password: "ijinmasuk",
   database: "customerservicedb"
