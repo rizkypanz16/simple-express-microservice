@@ -1,0 +1,13 @@
+{
+  "name": "root",
+  "dependencies": {
+    "lerna": "^7.1.4",
+    "pm2": "^5.3.0",
+    "serve": "^14.2.0"
+  },
+  "scripts": {
+    "start:products": "lerna run --scope products --stream start",
+    "start:customer": "lerna run --scope customer --stream start",
+    "start:both": "lerna run --parallel start"
+  }
+}
