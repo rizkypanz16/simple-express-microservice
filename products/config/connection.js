@@ -2,8 +2,8 @@ const env = require('dotenv').config();
 const mysql = require('mysql');
 
 dbdata = {
-  host: "192.168.7.61",
-  user: "root",
+  host: "192.168.0.128",
+  user: "productservice",
   password: "ijinmasuk",
   database: "productservicedb"
 }
