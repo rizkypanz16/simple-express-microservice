@@ -4,6 +4,9 @@ const cors = require("cors");
 
 const app = express();
 
+// Set up Swagger
+require("./swagger")(app);
+
 app.use(express.json({ extended: true }));
 
 var register = require("./src/routes/register.js");
@@ -19,14 +22,6 @@ app.use("/api/customer/wishlist", wishlist);
 app.use("/api/customer/register", register);
 app.use("/api/customer", customer);
 app.get("/api", (req, res) => {
-  res.json({
-    status: true,
-    code: 200,
-    message: "SUCCESS",
-    api: "== customer service ==",
-  });
-});
-app.get("/", (req, res) => {
   res.json({
     status: true,
     code: 200,
