@@ -1,0 +1,20 @@
+customerservicedb
+
+customer:
+ - customer_id
+ - customer_name
+ - customer_email
+ - customer_phone
+ - customer_address
+
+customer_wishlist:
+ - wishlist_id
+ - customer_id
+ - product_id
+ - wishlist_quantity
+
+CREATE DATABASE `customerservicedb`;
+CREATE USER 'customerservice'@localhost IDENTIFIED BY 'ijinmasuk';
+CREATE USER 'customerservice'@'%' IDENTIFIED BY 'ijinmasuk';
+GRANT ALL PRIVILEGES ON customerservicedb.* TO 'customerservice'@'localhost';
+GRANT ALL PRIVILEGES ON customerservicedb.* TO 'customerservice'@'%';

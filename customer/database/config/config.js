@@ -3,9 +3,9 @@
 module.exports = {
   development: {
     "dialect": "mysql",
-    "username": "productservice",
+    "username": "customerservice",
     "password": "ijinmasuk",
-    "database": "productservicedb",
+    "database": "customerservicedb",
     "host": "192.168.0.128",
     "port": 3306,
     "logging": false
