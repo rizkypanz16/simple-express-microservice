@@ -1,11 +1,11 @@
-const env = require("dotenv").config();
 const mysql = require("mysql");
+require("dotenv").config();
 
 dbdata = {
-  host: "192.168.0.128",
-  user: "customerservice",
-  password: "ijinmasuk",
-  database: "customerservicedb",
+  host: process.env.CUSTOMERSERVICE_DBHOST,
+  user: process.env.CUSTOMERSERVICE_DBUSER,
+  password: process.env.CUSTOMERSERVICE_DBPASS,
+  database: process.env.CUSTOMERSERVICE_DBNAME,
 };
 var connection = mysql.createConnection(dbdata);
 connection.connect(function (err) {

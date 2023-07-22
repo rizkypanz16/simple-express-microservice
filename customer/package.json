@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:seed:all": "npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",

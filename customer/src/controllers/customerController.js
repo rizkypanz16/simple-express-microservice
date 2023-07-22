@@ -8,7 +8,8 @@ exports.getCustomer = (req, res) => {
       if (error) throw error;
       res.status(200);
       res.json({
-        status: "OK",
+        status: "Ok",
+        message: "Success",
         data: results,
       });
     }
@@ -24,7 +25,8 @@ exports.getCustomerId = (req, res) => {
       if (error) throw error;
       res.status(200);
       res.json({
-        status: "OK",
+        status: "Ok",
+        message: "Success",
         data: results,
       });
     }
@@ -48,7 +50,8 @@ exports.putCustomer = (req, res) => {
     if (error) throw error;
     res.status(200);
     res.json({
-      status: "SUCCESS",
+      status: "Ok",
+      message: "Success",
       data: [],
     });
   });
@@ -61,7 +64,8 @@ exports.deleteCustomer = (req, res) => {
     if (error) throw error;
     res.status(200);
     res.json({
-      status: "SUCCESS",
+      status: "Ok",
+      message: "Success",
       data: [],
     });
   });

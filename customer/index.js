@@ -1,6 +1,7 @@
 const express = require("express");
 const env = require("dotenv").config();
 const cors = require("cors");
+const PORT = 8001;
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.get("/api", (req, res) => {
   });
 });
 
-app.listen(8001, () => {
+app.listen(PORT, () => {
   console.log("== customer service ==");
   console.log(`server listening at http://localhost:8001`);
 });

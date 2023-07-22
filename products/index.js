@@ -25,14 +25,6 @@ app.get("/api", (req, res) => {
     api: "== products service ==",
   });
 });
-app.get("/", (req, res) => {
-  res.json({
-    status: true,
-    code: 200,
-    message: "SUCCESS",
-    api: "== products service ==",
-  });
-});
 
 app.listen(PORT, () => {
   console.log("== products service ==");

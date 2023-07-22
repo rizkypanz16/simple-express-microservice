@@ -7,13 +7,13 @@ const options = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Customer API",
+      title: "Products API",
       version: "1.0.0",
-      description: "Customer API documentation",
+      description: "Products API documentation",
     },
     servers: [
       {
-        url: "http://localhost:8001",
+        url: "http://localhost:8002",
       },
     ],
   },
@@ -23,5 +23,5 @@ const options = {
 const specs = swaggerJsDoc(options);
 
 module.exports = (app) => {
-  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
+  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
 };
