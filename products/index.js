@@ -2,8 +2,9 @@ const express = require("express");
 const env = require("dotenv").config();
 const PORT = 8002;
 const cors = require("cors");
-
 const app = express();
+// Set up Swagger
+require("./swagger")(app);
 
 app.use(express.json({ extended: true }));
 
