@@ -17,9 +17,9 @@ pool.getConnection((err, connection) => {
     connection.release();
   } else {
     console.error(
-      `[${new Date().toISOString()}] [ERROR] Database not connected: `,
-      err
+      `[${new Date().toISOString()}] [ERROR] Database not connected: `
     );
+    console.error(err);
   }
 });
 
