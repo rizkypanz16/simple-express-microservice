@@ -1,5 +1,5 @@
-const config = require("../../config/connection");
-var connection = config.connection;
+const connection = require("../../config/connection");
+// var connection = config.connection;
 var bodyParser = require("body-parser");
 
 exports.getProducts = (req, res) => {
