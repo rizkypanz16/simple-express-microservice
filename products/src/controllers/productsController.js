@@ -2,9 +2,9 @@ require("body-parser");
 const connection = require("../../config/connection");
 
 exports.getProducts = (req, res) => {
+  let query =
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id";
   try {
-    let query =
-      "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id";
     connection.query(query, (error, results, fields) => {
       if (!error) {
         res.json({
@@ -32,11 +32,11 @@ exports.getProducts = (req, res) => {
 };
 exports.getProductBySearch = (req, res) => {
   let searchQuery = req.query.q;
+  let query =
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(products.product_name) LIKE '%" +
+    searchQuery +
+    "%'";
   try {
-    let query =
-      "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(products.product_name) LIKE '%" +
-      searchQuery +
-      "%'";
     connection.query(query, (error, results, fields) => {
       if (!error) {
         res.json({
@@ -174,24 +174,24 @@ exports.postProducts = (req, res) => {
   }
 };
 exports.putProducts = (req, res) => {
+  let query =
+    "UPDATE products SET product_name='" +
+    req.body.productName +
+    "', product_description='" +
+    req.body.productDescription +
+    "', product_quantity='" +
+    req.body.productQuantity +
+    "', product_price=" +
+    req.body.productPrice +
+    ", product_image='" +
+    req.body.productImage +
+    "', product_category=" +
+    req.body.productCategoryId +
+    ", product_updated_at = NOW()" +
+    " WHERE product_id=" +
+    req.params.productId +
+    "";
   try {
-    let query =
-      "UPDATE products SET product_name='" +
-      req.body.productName +
-      "', product_description='" +
-      req.body.productDescription +
-      "', product_quantity='" +
-      req.body.productQuantity +
-      "', product_price=" +
-      req.body.productPrice +
-      ", product_image='" +
-      req.body.productImage +
-      "', product_category=" +
-      req.body.productCategoryId +
-      ", product_updated_at = NOW()" +
-      " WHERE product_id=" +
-      req.params.productId +
-      "";
     connection.query(query, (error, results, fields) => {
       if (!error) {
         res.json({
@@ -218,9 +218,9 @@ exports.putProducts = (req, res) => {
   }
 };
 exports.deleteProducts = (req, res) => {
+  let query =
+    "DELETE FROM products WHERE product_id='" + req.params.productId + "'";
   try {
-    let query =
-      "DELETE FROM products WHERE product_id='" + req.params.productId + "'";
     connection.query(query, (error, results, fields) => {
       if (!error) {
         res.json({
