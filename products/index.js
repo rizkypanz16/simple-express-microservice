@@ -8,14 +8,16 @@ require("./swagger")(app);
 
 app.use(express.json({ extended: true }));
 
-var products = require("./src/routes/products");
-var productCategories = require("./src/routes/productCategories");
+let product = require("./src/routes/product");
+let productCategories = require("./src/routes/productCategories");
+let products = require("./src/routes/products");
 
 app.use(cors());
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
+app.use("/api/product", product);
 app.use("/api/products", products);
 app.use("/api/product-categories", productCategories);
 app.get("/api", (req, res) => {
