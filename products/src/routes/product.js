@@ -3,8 +3,10 @@ const router = express.Router();
 // import function from customerController
 const productsController = require("./../controllers/productsController.js");
 
-router.post("/", productsController.postProducts);
+router.get("/search", productsController.getProductBySearch);
+router.get("/category/:categoryName", productsController.getProductByCategory);
 router.get("/:productId", productsController.getProductsId);
+router.post("/", productsController.postProducts);
 router.put("/:productId", productsController.putProducts);
 router.delete("/:productId", productsController.deleteProducts);
 

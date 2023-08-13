@@ -29,75 +29,80 @@ exports.getProducts = (req, res) => {
       message: "Internal Server Error",
     });
   }
-  // try {
-  //   connection.query(
-  //     "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id;",
-  //     (error, results, fields) => {
-  //       if (error) throw error;
-  //       res.status(200);
-  //       res.json({
-  //         status: "OK",
-  //         data: results,
-  //       });
-  //     }
-  //   );
-  //   // connection.release();
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({
-  //     status: "error",
-  //     message: "Internal server error",
-  //   });
-  // }
-  // const categoryId = req.query.categoryId;
-  // const searchQuery = req.query.search;
-  // // JIKA MELAKUKAN QUERY BERDASARKAN categoryId
-  // if (categoryId !== undefined) {
-
-  //   // JIKA MELAKUKAN QUERY BERDASARKAN search
-  // } else if (searchQuery !== undefined) {
-  //   try {
-  //     connection.query(
-  //       "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(products.product_name) LIKE '%" +
-  //         searchQuery +
-  //         "%';",
-  //       (error, results, fields) => {
-  //         // if (error) throw error;
-  //         res.status(200);
-  //         res.json({
-  //           status: "OK",
-  //           data: results,
-  //         });
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ message: "Internal server error" });
-  //   }
-  //   // JIKA MENCARI SEMUA PRODUCT
-  // } else {
-  //   try {
-  //     connection.query(
-  //       "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id;",
-  //       (error, results, fields) => {
-  //         // if (error) throw error;
-  //         res.status(200);
-  //         res.json({
-  //           status: "OK",
-  //           data: results,
-  //         });
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ message: "Internal server error" });
-  //   }
-  // }
+};
+exports.getProductBySearch = (req, res) => {
+  let searchQuery = req.query.q;
+  try {
+    let query =
+      "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(products.product_name) LIKE '%" +
+      searchQuery +
+      "%'";
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          data: results,
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
+};
+exports.getProductByCategory = (req, res) => {
+  let categoryName = req.params.categoryName;
+  let query =
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(product_categories.product_category_name) LIKE '%" +
+    categoryName +
+    "%'";
+  try {
+    connection.query(query, (error, results) => {
+      if (!error) {
+        res.status(200);
+        res.json({
+          code: 200,
+          status: "Success",
+          data: results,
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
 };
 exports.getProductsId = (req, res) => {
+  let productId = null;
+  if (!isNaN(req.params.productId)) {
+    productId = parseInt(req.params.productId, 10);
+  }
   let query =
     "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_id = " +
-    req.params.productId +
+    productId +
     "";
   try {
     connection.query(query, (error, results) => {
