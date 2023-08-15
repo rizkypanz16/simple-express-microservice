@@ -246,3 +246,35 @@ exports.deleteProducts = (req, res) => {
     });
   }
 };
+exports.getCustomerWishlist = (req, res) => {
+  let customerId = req.params.customerId;
+  let query =
+    "SELECT customer_product_wishlist_id AS customerWishlistId, customer_product_wishlist_customerid AS customerId, customer_product_wishlist_created_at AS wishlistCreatedAt, customer_product_wishlist_updated_at AS wishlistUpdatedAt, customer_product_wishlist_productid AS productId, product_name AS productName, product_description AS productDescription, product_price AS productPrice, product_category AS productCategoryId, product_category_name AS productCategoryName FROM customer_product_wishlist INNER JOIN products ON customer_product_wishlist.customer_product_wishlist_productid = products.product_id INNER JOIN product_categories ON product_category = product_categories.product_category_id WHERE customer_product_wishlist_customerid = '" +
+    customerId +
+    "'";
+  try {
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          data: results,
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
+};
