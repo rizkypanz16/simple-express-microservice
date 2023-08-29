@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 // import function from customerController
-const productCategoriesController = require("./../controllers/productCategoriesController.js");
+const productCategoriesController = require("./product-categories.controller");
 
 router.get("/", productCategoriesController.getProductCategories);
 router.post("/", productCategoriesController.postProductCategories);

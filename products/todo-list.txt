@@ -1,3 +1,17 @@
+async GetWishList(customerId){
+    const wishListItems = await this.repository.Wishlist(customerId);
+    return FormateData(wishListItems);
+}
+async AddToWishlist(customerId, product){
+    const wishlistResult = await this.repository.AddWishlistItem(customerId, product);
+    return FormateData(wishlistResult);
+}
+
+`created_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+---
+
 productservicedb
 
 products:

@@ -1,5 +1,5 @@
 require("body-parser");
-const connection = require("../../config/connection");
+const connection = require("../../config/database");
 
 exports.getProducts = (req, res) => {
   let query =
