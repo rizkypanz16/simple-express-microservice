@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 // import function from customerController
-const customerController = require("./../controllers/customerController.js");
+const customerController = require("./customer.controller");
 
 /**
  * @swagger

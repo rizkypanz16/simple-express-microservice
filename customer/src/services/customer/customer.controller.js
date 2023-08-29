@@ -1,5 +1,4 @@
-const config = require("../../config/connection");
-var connection = config.connection;
+const connection = require("../../config/database");
 
 exports.getCustomer = (req, res) => {
   connection.query(
@@ -19,8 +18,8 @@ exports.getCustomer = (req, res) => {
 exports.getCustomerId = (req, res) => {
   connection.query(
     "SELECT customer_id AS customerId, customer_name AS customerName, customer_email AS customerEmail, customer_phone AS customerPhone, customer_address as customerAddress FROM customer WHERE customer_id = '" +
-      req.params.customerId +
-      "'",
+    req.params.customerId +
+    "'",
     (error, results, fields) => {
       if (error) throw error;
       res.status(200);

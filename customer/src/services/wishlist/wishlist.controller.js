@@ -1,5 +1,4 @@
-const config = require("../../config/connection");
-var connection = config.connection;
+const connection = require("../../config/database");
 
 exports.getWishlist = (req, res) => {
   connection.query(
@@ -18,8 +17,8 @@ exports.getWishlist = (req, res) => {
 exports.getWishlistId = (req, res) => {
   connection.query(
     "SELECT wishlist_id AS wishlistId, customer_id AS customerId, product_id AS productID, wishlist_quantity AS wishlistQuantity FROM customer_wishlist WHERE wishlist_id = '" +
-      req.params.wishlistId +
-      "'",
+    req.params.wishlistId +
+    "'",
     (error, results, fields) => {
       if (error) throw error;
       res.status(200);

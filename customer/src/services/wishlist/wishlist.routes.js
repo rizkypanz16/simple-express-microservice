@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // import function from wishlistController
-const wishlistController = require('./../controllers/wishlistController.js');
+const wishlistController = require('./wishlist.controller');
 
 router.get('/', wishlistController.getWishlist);
 

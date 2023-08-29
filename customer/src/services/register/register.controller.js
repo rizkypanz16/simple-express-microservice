@@ -1,6 +1,4 @@
-const config = require("../../config/connection");
-var connection = config.connection;
-var bodyParser = require("body-parser");
+const connection = require("../../config/database");
 
 exports.postRegister = (req, res) => {
   var query =

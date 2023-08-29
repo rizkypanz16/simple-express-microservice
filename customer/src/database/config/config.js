@@ -6,11 +6,11 @@ require("dotenv").config();
 module.exports = {
   development: {
     dialect: "mysql",
-    username: process.env.CUSTOMER_DBUSER,
-    password: process.env.CUSTOMER_DBPASS,
-    database: process.env.CUSTOMER_DBNAME,
-    host: process.env.CUSTOMER_DBHOST,
-    port: process.env.CUSTOMER_DBPORT,
+    username: process.env.CUSTOMERSERVICE_DBUSER,
+    password: process.env.CUSTOMERSERVICE_DBPASS,
+    database: process.env.CUSTOMERSERVICE_DBNAME,
+    host: process.env.CUSTOMERSERVICE_DBHOST,
+    port: process.env.CUSTOMERSERVICE_DBPORT,
     logging: false,
   },
 };
