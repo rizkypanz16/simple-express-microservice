@@ -1,39 +1,67 @@
 const connection = require("../../config/database");
 
 exports.getCustomer = (req, res) => {
-  connection.query(
-    "SELECT customer_id AS customerId, customer_name AS customerName, customer_email AS customerEmail, customer_phone AS customerPhone, customer_address as customerAddress FROM customer",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.status(200);
-      res.json({
-        status: "Ok",
-        message: "Success",
-        data: results,
-      });
-    }
-  );
+  let query = "SELECT customer_id AS customerId, customer_name AS customerName, customer_email AS customerEmail, customer_phone AS customerPhone, customer_address as customerAddress FROM customer";
+  try {
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          data: results,
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
 };
 
 exports.getCustomerId = (req, res) => {
-  connection.query(
-    "SELECT customer_id AS customerId, customer_name AS customerName, customer_email AS customerEmail, customer_phone AS customerPhone, customer_address as customerAddress FROM customer WHERE customer_id = '" +
+  let query = "SELECT customer_id AS customerId, customer_name AS customerName, customer_email AS customerEmail, customer_phone AS customerPhone, customer_address as customerAddress FROM customer WHERE customer_id = '" +
     req.params.customerId +
-    "'",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.status(200);
-      res.json({
-        status: "Ok",
-        message: "Success",
-        data: results,
-      });
-    }
-  );
+    "'";
+  try {
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          data: results,
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
 };
 
 exports.putCustomer = (req, res) => {
-  var query =
+  let query =
     "UPDATE customer SET customer_name='" +
     req.body.customerName +
     "', customer_email='" +
@@ -45,27 +73,59 @@ exports.putCustomer = (req, res) => {
     "' WHERE customer_id='" +
     req.params.customerId +
     "'";
-  connection.query(query, (error, results) => {
-    if (error) throw error;
-    res.status(200);
-    res.json({
-      status: "Ok",
-      message: "Success",
-      data: [],
+  try {
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          message: "Data Berhasil Di Update",
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
     });
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
 };
 
 exports.deleteCustomer = (req, res) => {
-  var query =
+  let query =
     "DELETE FROM customer WHERE customer_id='" + req.params.customerId + "'";
-  connection.query(query, (error, results) => {
-    if (error) throw error;
-    res.status(200);
-    res.json({
-      status: "Ok",
-      message: "Success",
-      data: [],
+  try {
+    connection.query(query, (error, results, fields) => {
+      if (!error) {
+        res.json({
+          code: 200,
+          status: "Success",
+          message: "Data Berhasil Di Hapus",
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          code: 500,
+          status: "Error",
+          message: "Internal Server Error",
+        });
+      }
     });
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: 500,
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
 };
