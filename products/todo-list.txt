@@ -1,0 +1,54 @@
+async GetWishList(customerId){
+    const wishListItems = await this.repository.Wishlist(customerId);
+    return FormateData(wishListItems);
+}
+async AddToWishlist(customerId, product){
+    const wishlistResult = await this.repository.AddWishlistItem(customerId, product);
+    return FormateData(wishlistResult);
+}
+
+`created_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+---
+
+productservicedb
+
+products:
+  - product_id
+  - product_name
+  - product_description
+  - product_quantity
+  - product_price
+  - product_image
+  - product_category
+  - product_created_at
+  - product_updated_at
+  
+product_categories:
+  - product_category_id
+  - product_category_name
+  - product_category_description
+  - product_category_created_at
+  - product_category_updated_at
+  
+CREATE DATABASE `productservicedb`;
+CREATE USER 'productservice'@localhost IDENTIFIED BY 'ijinmasuk';
+GRANT ALL PRIVILEGES ON productservicedb.* TO 'productservice'@'localhost';
+
+CREATE USER 'productservice'@'%' IDENTIFIED BY 'ijinmasuk';
+GRANT ALL PRIVILEGES ON productservicedb.* TO 'productservice'@'%';
+
+create mysql table with sequelize with product_id int primary_key auto_increment not null, product_name varchar not null, product_description text, product_quantity int not null, product_price int not null,  product_image text, product_category int not null, product_created_at datetime, product_updated_at datetime
+
+{
+  "development": {
+    "username": "productservice",
+    "password": "ijinmasuk",
+    "database": "productservicedb",
+    "host": "192.168.0.128",
+    "dialect": "mysql"
+  }
+}
+
+  
