@@ -3,6 +3,7 @@ var router = express.Router();
 
 // import function from customerController
 const customerController = require("./customer.controller");
+const wishlistController = require("../wishlist/wishlist.controller")
 
 /**
  * @swagger
@@ -59,6 +60,8 @@ router.get("/", customerController.getCustomer);
  *
  */
 router.get("/:customerId", customerController.getCustomerId);
+
+router.get("/:customerId/wishlist", wishlistController.getCustomerWishlist);
 
 router.put("/:customerId", customerController.putCustomer);
 

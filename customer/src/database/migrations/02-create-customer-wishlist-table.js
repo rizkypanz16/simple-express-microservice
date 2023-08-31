@@ -13,17 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-	  product_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      wishlist_quantity: {
-        type: Sequelize.INTEGER,
-      },
-	  wishlist_created_at: {
-        type: Sequelize.DATE,
-      },
-      wishlist_updated_at: {
+      wishlist_created_at: {
         type: Sequelize.DATE,
       },
     });
