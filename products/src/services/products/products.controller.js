@@ -278,3 +278,43 @@ exports.getCustomerWishlist = (req, res) => {
     });
   }
 };
+exports.getProductDetail = (req, res) => {
+  let productIds = req.body.customerProductId;
+  // console.log(productIds);
+  let query =
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_id IN (" + productIds + ")";
+  if (productIds !== null && productIds.length !== 0) {
+    try {
+      connection.query(query, (error, results, fields) => {
+        if (!error) {
+          res.json({
+            code: 200,
+            status: "Success",
+            data: results,
+          });
+        } else {
+          console.error(error);
+          res.status(500).json({
+            code: 500,
+            status: "Error",
+            message: "Internal Server Error",
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        code: 500,
+        status: "Error",
+        message: "Internal Server Error",
+      });
+    }
+  } else {
+    // jika req.body kosong atau null
+    res.status(400).json({
+      code: 400,
+      status: "Error",
+      message: "Bad Request",
+    });
+  }
+};

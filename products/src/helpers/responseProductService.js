@@ -8,6 +8,6 @@ exports.api = (req, res) => {
 }
 
 exports.log = (req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${req.body}`);
     next();
 }
