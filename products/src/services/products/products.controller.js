@@ -1,7 +1,10 @@
 require("body-parser");
 const connection = require("../../config/database");
+const uuid = require('uuid');
 
 exports.getProducts = (req, res) => {
+  //const randomUUID = uuid.v4();
+  // res.status(200).json({ uuid: randomUUID });
   let query =
     "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id";
   try {
