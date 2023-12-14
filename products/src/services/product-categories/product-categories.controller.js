@@ -1,5 +1,6 @@
 require("body-parser");
 const connection = require("../../config/database");
+const { v4: uuidv4 } = require('uuid');
 
 exports.getProductCategories = (req, res) => {
   let query =
@@ -65,11 +66,13 @@ exports.getProductCategoriesId = (req, res) => {
 
 exports.postProductCategories = (req, res) => {
   let query =
-    "INSERT INTO product_categories (product_category_name, product_category_description) VALUES ('" +
+    "INSERT INTO product_categories (product_category_id, product_category_name, product_category_description, product_category_created_at) VALUES ('" +
+    uuidv4() +
+    "', '" +
     req.body.productCategoryName +
     "', '" +
     req.body.productCategoryDescription +
-    "' )";
+    "', NOW())";
   try {
     connection.query(query, (error, results) => {
       if (!error) {
