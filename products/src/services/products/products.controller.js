@@ -1,6 +1,6 @@
 require("body-parser");
 const connection = require("../../config/database");
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 exports.getProducts = (req, res) => {
   //const randomUUID = uuid.v4();
@@ -66,11 +66,12 @@ exports.getProductBySearch = (req, res) => {
   }
 };
 exports.getProductByCategory = (req, res) => {
-  let categoryName = req.params.categoryName;
+  let categoryName = req.query.categoryName;
+  console.log(categoryName);
   let query =
-    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(product_categories.product_category_name) LIKE '%" +
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE LOWER(product_categories.product_category_name) LIKE LOWER('%" +
     categoryName +
-    "%'";
+    "%')";
   try {
     connection.query(query, (error, results) => {
       if (!error) {
@@ -99,14 +100,10 @@ exports.getProductByCategory = (req, res) => {
   }
 };
 exports.getProductsId = (req, res) => {
-  let productId = null;
-  if (!isNaN(req.params.productId)) {
-    productId = parseInt(req.params.productId, 10);
-  }
   let query =
-    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_id = " +
-    productId +
-    "";
+    "SELECT products.product_id AS productId, products.product_name AS productName, products.product_description AS productDescription, products.product_quantity AS productQuantity, products.product_price AS productPrice, products.product_image AS productImage, products.product_category AS productCategoryId, product_categories.product_category_name AS productCategoryName, products.product_created_at AS productCreatedAt, products.product_updated_at AS productUpdatedAt FROM products INNER JOIN product_categories ON products.product_category = product_categories.product_category_id WHERE products.product_id = '" +
+    req.params.productId +
+    "'";
   try {
     connection.query(query, (error, results) => {
       if (!error) {
@@ -136,7 +133,9 @@ exports.getProductsId = (req, res) => {
 };
 exports.postProducts = (req, res) => {
   let query =
-    "INSERT INTO products (product_name, product_description, product_quantity, product_price, product_image, product_category, product_created_at) VALUES ('" +
+    "INSERT INTO products (product_id, product_name, product_description, product_quantity, product_price, product_image, product_category, product_created_at) VALUES ('" +
+    uuidv4() +
+    "', '" +
     req.body.productName +
     "', '" +
     req.body.productDescription +
@@ -146,9 +145,9 @@ exports.postProducts = (req, res) => {
     req.body.productPrice +
     ", '" +
     req.body.productImage +
-    "', " +
+    "', '" +
     req.body.productCategoryId +
-    ", NOW())";
+    "', NOW())";
   try {
     connection.query(query, (error, results) => {
       if (!error) {
@@ -188,12 +187,12 @@ exports.putProducts = (req, res) => {
     req.body.productPrice +
     ", product_image='" +
     req.body.productImage +
-    "', product_category=" +
+    "', product_category='" +
     req.body.productCategoryId +
-    ", product_updated_at = NOW()" +
-    " WHERE product_id=" +
+    "', product_updated_at = NOW()" +
+    " WHERE product_id='" +
     req.params.productId +
-    "";
+    "'";
   try {
     connection.query(query, (error, results, fields) => {
       if (!error) {

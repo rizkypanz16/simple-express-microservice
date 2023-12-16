@@ -4,7 +4,6 @@ const router = express.Router();
 const productsController = require("./products.controller");
 
 router.get("/search", productsController.getProductBySearch);
-router.get("/category/:categoryName", productsController.getProductByCategory);
 router.post("/details", productsController.getProductDetail);
 router.get("/:productId", productsController.getProductsId);
 router.post("/", productsController.postProducts);
