@@ -1,13 +1,12 @@
 // YYYYMMDDHHMMSS-products-seeders.js
 
 'use strict';
-const { v4: uuidv4 } = require('uuid'); // import UUID
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('products', [
       {
-        product_id: uuidv4(), // Generate a UUID
+        product_id: '206e68e4-407f-404b-90ae-7f9d3591f581',
         product_name: 'iphone 12',
         product_description: '-',
         product_quantity: 12,
@@ -18,7 +17,7 @@ module.exports = {
         product_updated_at: null,
       },
       {
-        product_id: uuidv4(), // Generate a UUID
+        product_id: '72721cd4-b00a-417a-874b-52dbe5461d1d',
         product_name: 'imac 2023',
         product_description: '-',
         product_quantity: 12,
