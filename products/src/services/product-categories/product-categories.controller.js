@@ -107,9 +107,9 @@ exports.putProductCategories = (req, res) => {
     req.body.productCategoryName +
     "', product_category_description='" +
     req.body.productCategoryDescription +
-    "' WHERE product_category_id=" +
+    "', product_category_updated_at=NOW() WHERE product_category_id='" +
     req.params.productCategoryId +
-    "";
+    "'";
   try {
     connection.query(query, (error, results, fields) => {
       if (!error) {
